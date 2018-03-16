@@ -1,0 +1,230 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Scacchi</title>
+    <style type="text/css">
+
+        body {
+            background-image: url('/images/background.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            width: 700px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-style: italic;
+            font-size: 50px;
+            color: #00ffc1
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            margin: 0 auto;
+        }
+
+        #chess {
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+
+        td {
+            padding: 2px;
+            width: 80px;
+            height: 80px;
+            background-size: 100% 100%;
+        }
+
+        .dark {
+            background-image: url('/images/black.jpg');
+        }
+
+        .light {
+            background-image: url('/images/white.jpg');
+        }
+
+        #player1 {
+            font-style: italic;
+            font-size: 25px;
+            color: #00ffc1
+        }
+
+        #player2 {
+            font-style: italic;
+            font-size: 25px;
+            color: #00ffc1
+        }
+
+        .torreBianco {
+            background-image: url('/images/torre bianco.png');
+        }
+
+        .cavalloBianco {
+            background-image: url('/images/cavallo bianco.png');
+        }
+
+        .alfiereBianco {
+            background-image: url('/images/alfiere bianco.png');
+        }
+
+        .reginaBianco {
+            background-image: url('/images/regina bianco.png');
+        }
+
+        .reBianco {
+            background-image: url('/images/re bianco.png');
+        }
+
+        .pedoneBianco {
+            background-image: url('/images/pedone bianco.png');
+        }
+
+        .torreNero {
+            background-image: url('/images/torre nero.png');
+        }
+
+        .cavalloNero {
+            background-image: url('/images/cavallo nero.png');
+        }
+
+        .alfiereNero {
+            background-image: url('/images/alfiere nero.png');
+        }
+
+        .reginaNero {
+            background-image: url('/images/regina nero.png');
+        }
+
+        .reNero {
+            background-image: url('/images/re nero.png');
+        }
+
+        .pedoneNero {
+            background-image: url('/images/pedone nero.png');
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Comic Chess</h1>
+    <div>
+        <div id="player1" class="player"><p><b>Player 1</b></p></div>
+        <div id="player2" class="player"><p><b>Player 2</b></p></div>
+    </div>
+    <div>
+        <script type="text/javascript">
+
+            var color;
+            document.write('<table id = "chess">');
+            for (i = 1; i <= 8; i++) {
+                document.write('<tr id = "riga' + i + '">')
+                for (j = 1; j <= 8; j++) {
+                    if ((i + j) % 2 != 0) {
+                        document.write('<td class= "dark">')
+                    }
+                    else {
+                        document.write('<td class= "light">')
+                    }
+                    document.write('</td>');
+                }
+                document.write('</tr>');
+            }
+            document.write('</table>');
+            document.close();
+        </script>
+    </div>
+
+    <script>
+        var riga1 = document.getElementById('riga1');
+        var riga2 = document.getElementById('riga2');
+        riga7
+        riga8
+
+        var celleRiga1 = riga1.children;
+
+        var cellaRiga8 = riga8.children;
+
+        var riga1Classe = [
+            'torreBianco',
+            'cavalloBianco',
+            'alfiereBianco',
+            'reginaBianco',
+            'reBianco',
+            'alfiereBianco',
+            'cavalloBianco',
+            'torreBianco'
+        ];
+
+        var riga8Classe = [
+            'torreNero',
+            'cavalloNero',
+            'alfiereNero',
+            'reginaNero',
+            'reNero',
+            'alfiereNero',
+            'cavalloNero',
+            'torreNero'
+        ];
+
+
+        for (var i = 0; i < celleRiga1.length; i++) { 
+            var currentCell = celleRiga1[i];
+            currentCell.piece = new Piece(riga1Classe[i], currentCell);
+        }
+
+        for (var i = 0; i < 8; i++) {
+            var currentCell = riga2.children[i];
+            currentCell.piece = new Piece('pedoneBianco', currentCell);
+        }
+
+        for (var i = 0; i < cellaRiga8.length; i++) {
+            var currentCell = cellaRiga8[i];
+            currentCell.piece = new Piece(riga8Classe[i], currentCell);
+        }
+
+        for (var i = 0; i < 8; i++) {
+            var currentCell = riga7.children[i];
+            currentCell.piece = new Piece('pedoneNero', currentCell);
+        }
+
+        //var board = [];
+
+
+        function Piece(image, position) {
+            this.image = image;
+            this.position = position;
+            position.classList.add(image);
+        }
+
+        Piece.prototype.move = function (destination) {
+            this.position.classList.remove(this.image);
+            this.position = destination;
+            this.position.classList.add(this.image);
+        }
+
+        var table = document.getElementById('chess');
+
+        table.addEventListener('click', first);
+
+        var currentMove;
+
+        function first(e) {
+            currentMove = e.target;
+            e.stopImmediatePropagation();
+            this.removeEventListener("click", first);
+            table.onclick = second;
+        }
+        function second(e) {
+            currentMove.piece.move(e.target);
+            alert("I'm not suppose to appear after the first click, only the second.");  
+        }
+
+        
+
+    </script>
+</body>
+</html>
